@@ -30,7 +30,7 @@ add_shortcode('en_donation_lightbox', function($atts, $content = '') {
 	$image = (isset($atts['image'])) ? $atts['image'] : $settings['image'];
 	$logo = (isset($atts['logo'])) ? $atts['logo'] : $settings['logo'];
 	$footer = (isset($atts['footer'])) ? $atts['footer'] : $settings['footer'];
-	$paragraph = (!empty($atts['paragraph'])) ? $atts['paragraph'] : $content;
+	$paragraph = ($content) ? $content : $settings['paragraph'];
 
 	if($script_url) {
 		wp_enqueue_script('fs-en-donation-lightbox', $script_url);
