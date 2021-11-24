@@ -62,6 +62,7 @@
 	<?php fsedl_render_text_input('Logo',			'logo',		$logo);		?>
 	<?php fsedl_render_text_input('Footer',			'footer',	$footer);	?>
 	<?php fsedl_render_checkbox_input('Autoload',	'autoload',	$autoload); ?>
+	<?php fsedl_render_checkbox_input('Sitewide',	'sitewide',	$sitewide); ?>
 	<input type='submit' value='Update' />
 </form>
 <style>

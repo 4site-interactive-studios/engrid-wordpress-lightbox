@@ -14,9 +14,15 @@ add_action('wp_enqueue_scripts', function() {
 	$settings = fsedl_get_settings();
 	$script_url = (isset($atts['script'])) ? $atts['script'] : $settings['script'];
 	$autoload = $settings['autoload'];
+	$sitewide = $settings['sitewide'];
 
-	if($autoload && $script_url) {
-		wp_enqueue_script('fs-en-donation-lightbox', $script_url);
+	if($script_url) {
+		if($autoload) {
+			wp_enqueue_script('fs-en-donation-lightbox', $script_url);
+		} else if($sitewide) {
+			wp_enqueue_script('fs-en-donation-lightbox', $script_url);
+			wp_add_inline_script('fs-en-donation-lightbox', do_shortcode('[en_donation_lightbox]'));
+		}
 	}
 });
 
@@ -84,6 +90,7 @@ function fsedl_render_settings_page() {
 	$logo = $settings['logo'];
 	$footer = $settings['footer'];
 	$autoload = $settings['autoload'];
+	$sitewide = $settings['sitewide'];
 
 	ob_start();
 	include 'admin-settings-page.php';
@@ -102,7 +109,8 @@ function fsedl_get_settings() {
 			'image' => '',
 			'logo' => '',
 			'footer' => '',
-			'autoload' => false
+			'autoload' => false,
+			'sitewide' => false
 		];
 	}
 	return $settings;	
@@ -111,6 +119,6 @@ function fsedl_get_settings() {
 // Helper function
 function fsedl_set_settings($settings) {
 	// We are only interested in certain keys
-	$pruned_settings = array_intersect_key($settings, array_flip(array('url', 'title', 'paragraph', 'script', 'image', 'logo', 'footer', 'autoload')));
+	$pruned_settings = array_intersect_key($settings, array_flip(array('url', 'title', 'paragraph', 'script', 'image', 'logo', 'footer', 'autoload', 'sitewide')));
 	set_transient('fsedl_settings', $pruned_settings);
 }
